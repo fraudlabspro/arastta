@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created using vQModerator's XML Generator by The Wizard of Osch for http://www.crystalcopy.nl //-->
+<!-- (Based on vQmod XML Generator by UKSB - http://www.opencart-extensions.co.uk) //-->
+<modification>
+    <id><![CDATA[FraudLabs Pro]]></id>
+    <version><![CDATA[1.1.1]]></version>
+    <vqmver required="true"><![CDATA[2.4.0]]></vqmver>
+    <author><![CDATA[FraudLabs Pro]]></author>
+    <file name="admin/model/sale/fraud.php">
+        <operation error="abort" info="">
+            <search position="replace"><![CDATA[DB_PREFIX . "order_fraud`]]></search>
+            <add><![CDATA[DB_PREFIX . "order_fraudlabspro`]]></add>
+        </operation>
+    </file>
+    <file name="admin/controller/sale/order.php">
+        <operation error="abort" info="">
+            <search position="replace" offset="200"><![CDATA[if ($fraud_info) {]]></search>
+            <add><![CDATA[if ($fraud_info) {
+                // Get FraudLabs Pro result
+                if ($fraud_info['ip_address']) {
+                    $data['flp_ip_address'] = $fraud_info['ip_address'];
+                } else {
+                    $data['flp_ip_address'] = '';
+                }
+
+                if ($fraud_info['ip_netspeed']) {
+                    $data['flp_ip_net_speed'] = $fraud_info['ip_netspeed'];
+                } else {
+                    $data['flp_ip_net_speed'] = '';
+                }
+
+                if ($fraud_info['ip_isp_name']) {
+                    $data['flp_ip_isp_name'] = $fraud_info['ip_isp_name'];
+                } else {
+                    $data['flp_ip_isp_name'] = '';
+                }
+
+                if ($fraud_info['ip_usage_type']) {
+                    $data['flp_ip_usage_type'] = $fraud_info['ip_usage_type'];
+                } else {
+                    $data['flp_ip_usage_type'] = '';
+                }
+
+                if ($fraud_info['ip_domain']) {
+                    $data['flp_ip_domain'] = $fraud_info['ip_domain'];
+                } else {
+                    $data['flp_ip_domain'] = '';
+                }
+
+                if ($fraud_info['ip_timezone']) {
+                    $data['flp_ip_time_zone'] = $fraud_info['ip_timezone'];
+                } else {
+                    $data['flp_ip_time_zone'] = '';
+                }
+
+                if ($fraud_info['ip_country']) {
+                    $data['flp_ip_location'] = $fraud_info['ip_continent'] . ", " . $fraud_info['ip_country'] . ", " . $fraud_info['ip_region'] . ", " . $fraud_info['ip_city'] . " <a href=\"https://www.geolocation.com/" . $fraud_info['ip_address'] . "\" target=\"_blank\">[Map]</a>";
+                } else {
+                    $data['flp_ip_location'] = '-,-,-,-';
+                }
+
+                if ($fraud_info['distance_in_mile']) {
+                    $data['flp_ip_distance'] = $fraud_info['distance_in_mile'] . " miles";
+                } else {
+                    $data['flp_ip_distance'] = '';
+                }
+
+                if ($fraud_info['ip_latitude']) {
+                    $data['flp_ip_latitude'] = $fraud_info['ip_latitude'];
+                } else {
+                    $data['flp_ip_latitude'] = '';
+                }
+
+                if ($fraud_info['ip_longitude']) {
+                    $data['flp_ip_longitude'] = $fraud_info['ip_longitude'];
+                } else {
+                    $data['flp_ip_longitude'] = '';
+                }
+
+                if ($fraud_info['is_high_risk_country']) {
+                    $data['flp_risk_country'] = $fraud_info['is_high_risk_country'];
+                } else {
+                    $data['flp_risk_country'] = '';
+                }
+
+                if ($fraud_info['is_free_email']) {
+                    $data['flp_free_email'] = $fraud_info['is_free_email'];
+                } else {
+                    $data['flp_free_email'] = '';
+                }
+
+                if ($fraud_info['is_address_ship_forward']) {
+                    $data['flp_ship_forward'] = $fraud_info['is_address_ship_forward'];
+                } else {
+                    $data['flp_ship_forward'] = '';
+                }
+
+                if ($fraud_info['is_proxy_ip_address']) {
+                    $data['flp_using_proxy'] = $fraud_info['is_proxy_ip_address'];
+                } else {
+                    $data['flp_using_proxy'] = '';
+                }
+
+                if ($fraud_info['is_bin_found']) {
+                    $data['flp_bin_found'] = $fraud_info['is_bin_found'];
+                } else {
+                    $data['flp_bin_found'] = '';
+                }
+
+                if ($fraud_info['is_email_blacklist']) {
+                    $data['flp_email_blacklist'] = $fraud_info['is_email_blacklist'];
+                } else {
+                    $data['flp_email_blacklist'] = '';
+                }
+
+                if ($fraud_info['is_credit_card_blacklist']) {
+                    $data['flp_credit_card_blacklist'] = $fraud_info['is_credit_card_blacklist'];
+                } else {
+                    $data['flp_credit_card_blacklist'] = '';
+                }
+
+                if ($fraud_info['fraudlabspro_score']) {
+                    $data['flp_score'] = $fraud_info['fraudlabspro_score'];
+                } else {
+                    $data['flp_score'] = '';
+                }
+
+                if ($fraud_info['fraudlabspro_status']) {
+                    $data['flp_status'] = $fraud_info['fraudlabspro_status'];
+                } else {
+                    $data['flp_status'] = '';
+                }
+
+                if ($fraud_info['fraudlabspro_message']) {
+                    $data['flp_message'] = $fraud_info['fraudlabspro_message'];
+                } else {
+                    $data['flp_message'] = '';
+                }
+
+                if ($fraud_info['fraudlabspro_id']) {
+                    $data['flp_id'] = $fraud_info['fraudlabspro_id'];
+                    $data['flp_link'] = $fraud_info['fraudlabspro_id'];
+                } else {
+                    $data['flp_id'] = '';
+                    $data['flp_link'] = '';
+                }
+
+                if ($fraud_info['fraudlabspro_credits']) {
+                    $data['flp_credits'] = $fraud_info['fraudlabspro_credits'];
+                } else {
+                    $data['flp_credits'] = '';
+                }
+
+                $this->load->model('antifraud/fraudlabspro');
+
+                //Action of the Approve/Reject button click
+                if (isset($_POST['flp_id'])){
+                    $flp_status = $_POST['new_flp_status'];
+                    $data['flp_status'] = $flp_status;
+                    
+                    //Feedback FLP status to server
+                    $fraudlabspro_key = $this->config->get('fraudlabspro_antifraud_key');
+                    
+                    for($i=0; $i<3; $i++){
+                        $result = @file_get_contents('https://api.fraudlabspro.com/v1/order/feedback?key=' . $fraudlabspro_key . '&format=json&id=' . $_POST['flp_id'] . '&action=' . $flp_status . '&source=arastta');
+
+                        if($result) break;
+                    }
+
+                    //Update fraud status into table
+                    $this->db->query("UPDATE `" . DB_PREFIX . "order_fraudlabspro` SET fraudlabspro_status = '" . $flp_status . "' WHERE order_id = " . $this->request->get['order_id']);
+                    
+                    //Update history record
+                    if (strtolower($flp_status) == 'approve'){
+                        $data_temp = array(
+                            'order_status_id'=>$this->config->get('fraudlabspro_antifraud_approve_status_id'),
+                            'notify'=>0,
+                            'comment'=>'Approved using FraudLabs Pro.'
+                        );
+
+                        $this->model_antifraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
+                    }
+                    else if (strtolower($flp_status) == "reject"){
+                        $data_temp = array(
+                            'order_status_id'=>$this->config->get('fraudlabspro_antifraud_reject_status_id'),
+                            'notify'=>0,
+                            'comment'=>'Rejected using FraudLabs Pro.'
+                        );
+
+                        $this->model_antifraud_fraudlabspro->addOrderHistory($this->request->get['order_id'], $data_temp);
+                    }
+                }
+                
+            } else {
+                $data['flp_id'] = '';
+            }
+            ]]></add>
+        </operation>
+    </file>
+    <file name="admin/view/theme/basic/template/sale/order_info.tpl">
+        <operation error="abort" info="">
+            <search position="replace"><![CDATA[$maxmind_id]]></search>
+            <add><![CDATA[$flp_id]]></add>
+        </operation>
+        <operation error="abort" info="">
+            <search position="replace" offset="303"><![CDATA[<div class="fraud">]]></search>
+            <add><![CDATA[            <?php
+                $help_transaction_id = 'Unique identifier for a transaction screened by FraudLabs Pro system.';
+                $text_transaction_id = 'Transaction ID';
+                $help_score = 'Risk score, 0 (low risk) - 100 (high risk).';
+                $text_score = 'FraudLabs Pro Score';
+                $help_status = 'FraudLabs Pro status.';
+                $text_status = 'FraudLabs Pro Status';
+                $help_ip_address = 'IP Address.';
+                $text_ip_address = 'IP Address';
+                $help_ip_net_speed = 'Connection speed.';
+                $text_ip_net_speed = 'IP Net Speed';
+                $help_ip_isp_name = 'ISP of the IP address.';
+                $text_ip_isp_name = 'IP ISP Name';
+                $help_ip_usage_type = 'Usage type of the IP address. E.g, ISP, Commercial, Residential.';
+                $text_ip_usage_type = 'IP Usage Type';
+                $help_ip_domain = 'Domain name of the IP address.';
+                $text_ip_domain = 'IP Domain';
+                $help_ip_time_zone = 'Time zone of the IP address.';
+                $text_ip_time_zone = 'IP Time Zone';
+                $help_ip_location = 'Location of the IP address.';
+                $text_ip_location  = 'IP Location';
+                $help_ip_distance = 'Distance from IP address to Billing Location.';
+                $text_ip_distance = 'IP Distance';
+                $help_ip_latitude = 'Latitude of the IP address.';
+                $text_ip_latitude = 'IP Latitude';
+                $help_ip_longitude = 'Longitude of the IP address.';
+                $text_ip_longitude = 'IP Longitude';
+                $help_risk_country = 'Whether IP address country is in the latest high risk country list.';
+                $text_risk_country = 'High Risk Country';
+                $help_free_email = 'Whether e-mail is from free e-mail provider.';
+                $text_free_email = 'Free Email';
+                $help_ship_forward = 'Whether shipping address is a freight forwarder address.';
+                $text_ship_forward = 'Ship Forward';
+                $help_using_proxy = 'Whether IP address is from Anonymous Proxy Server.';
+                $text_using_proxy = 'Using Proxy';
+                $help_bin_found = 'Whether the BIN information matches our BIN list.';
+                $text_bin_found = 'BIN Found';
+                $help_email_blacklist = 'Whether the email address is in our blacklist database.';
+                $text_email_blacklist = 'Email Blacklist';
+                $help_credit_card_blacklist = 'Whether the credit card is in our blacklist database.';
+                $text_credit_card_blacklist = 'Credit Card Blacklist';
+                $help_credits = 'Balance of the credits available after this transaction.';
+                $text_credits = 'Balance';
+                $text_flp_upgrade = '<a href="https://www.fraudlabspro.com/plan" target="_blank">[Upgrade]</a>';
+                $help_message = 'FraudLabs Pro error message description.';
+                $text_message = 'Message';
+                $text_flp_merchant_area = 'Please login to <a href="https://www.fraudlabspro.com/merchant/login" target="_blank">FraudLabs Pro Merchant Area</a> for more information about this order.';
+                
+            ?>
+            <div class="fraud">
+              <div class="table-responsive">
+              <table class="table table-bordered">
+              <tr>
+                <td style="text-align:center; background-color:#ab1b1c; border:1px solid #ab1b1c;" colspan="2"><img src="https://www.fraudlabspro.com/images/logo_200.png" alt="FraudLabs Pro" /></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_transaction_id; ?>"><?php echo $text_transaction_id; ?></span></td>
+                <td><a href="https://www.fraudlabspro.com/merchant/transaction-details/<?php echo $flp_id; ?>/" target="_blank"><?php echo $flp_id; ?></a></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_score; ?>"><?php echo $text_score; ?></span></td>
+                <td><img class="img-responsive" alt="" src="//fraudlabspro.hexa-soft.com/images/fraudscore/fraudlabsproscore<?php echo $flp_score; ?>.png" /></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_status; ?>"><?php echo $text_status; ?></span></td>
+                <td id="flp_status"><span style="font-weight:bold; color:<?php if (strtolower($flp_status) == 'approve') echo '#5cb85c'; else if (strtolower($flp_status) == 'review') echo '#f0ad4e'; else echo '#d9534f'; ?>"><?php echo $flp_status; ?></span></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_address; ?>"><?php echo $text_ip_address; ?></span></td>
+                <td><?php echo $flp_ip_address; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_net_speed; ?>"><?php echo $text_ip_net_speed; ?></span></td>
+                <td><?php echo $flp_ip_net_speed; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_isp_name; ?>"><?php echo $text_ip_isp_name; ?></span></td>
+                <td><?php echo $flp_ip_isp_name; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_usage_type; ?>"><?php echo $text_ip_usage_type; ?></span></td>
+                <td><?php echo $flp_ip_usage_type; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_domain; ?>"><?php echo $text_ip_domain; ?></span></td>
+                <td><?php echo $flp_ip_domain; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_time_zone; ?>"><?php echo $text_ip_time_zone; ?></span></td>
+                <td><?php echo $flp_ip_time_zone; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_location; ?>"><?php echo $text_ip_location; ?></span></td>
+                <td><?php echo $flp_ip_location; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_distance; ?>"><?php echo $text_ip_distance; ?></span></td>
+                <td><?php echo $flp_ip_distance; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_latitude; ?>"><?php echo $text_ip_latitude; ?></span></td>
+                <td><?php echo $flp_ip_latitude; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ip_longitude; ?>"><?php echo $text_ip_longitude; ?></span></td>
+                <td><?php echo $flp_ip_longitude; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_free_email; ?>"><?php echo $text_free_email; ?></span></td>
+                <td><?php echo $flp_free_email; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_ship_forward; ?>"><?php echo $text_ship_forward; ?></span></td>
+                <td><?php echo $flp_ship_forward; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_using_proxy; ?>"><?php echo $text_using_proxy; ?></span></td>
+                <td><?php echo $flp_using_proxy; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_bin_found; ?>"><?php echo $text_bin_found; ?></span></td>
+                <td><?php echo $flp_bin_found; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_email_blacklist; ?>"><?php echo $text_email_blacklist; ?></span></td>
+                <td><?php echo $flp_email_blacklist; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_credit_card_blacklist; ?>"><?php echo $text_credit_card_blacklist; ?></span></td>
+                <td><?php echo $flp_credit_card_blacklist; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_credits; ?>"><?php echo $text_credits; ?></span></td>
+                <td><?php echo $flp_credits . ' ' . $text_flp_upgrade; ?></td>
+              </tr>
+              <tr>
+                <td><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_message; ?>"><?php echo $text_message; ?></span></td>
+                <td><?php echo $flp_message; ?></td>
+              </tr>
+              
+              <?php if (strtolower($flp_status) == 'review'){?>
+              <tr style="background-color:#eee;">
+                <td id="flp_action" colspan="2">
+                  <form id="review-action" method="post">
+                    <div align="center">
+                      <button type="button" id="button-flp-approve" class="btn btn-primary"><i class="fa fa-check"></i> Approve</button>
+                      <button type="button" id="button-flp-reject" class="btn btn-danger"><i class="fa fa-remove"></i> Reject</button>
+                    </div>
+                    <input type="hidden" id="flp_id" name="flp_id" value="<?php echo $flp_id; ?>" />
+                    <input type="hidden" id="new_flp_status" name="new_flp_status" value="" />
+                  </form>
+                  
+                  <script>
+                $(document).ready(function(){
+                    $("#button-flp-approve").click(function(){
+                        $("#new_flp_status").val("APPROVE");
+                        $("#review-action").submit();
+                    });
+                });
+                
+                $(document).ready(function(){
+                    $("#button-flp-reject").click(function(){
+                        $("#new_flp_status").val("REJECT");
+                        $("#review-action").submit();
+                    });
+                });
+                  </script>
+                </td>
+              </tr>
+              <?php } ?>
+              </table>
+              <div>
+                <?php echo $text_flp_merchant_area; ?>
+              </div>]]></add>
+        </operation>
+    </file>
+    <file path="catalog/view/theme/second/template/common/footer.tpl">
+        <operation error="abort">
+            <search><![CDATA[</body>]]></search>
+            <add position="replace"><![CDATA[
+<script>
+    (function(){
+        function s() {
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.async = true;
+            e.src = ('https:' === document.location.protocol ? 'https://' : 'http://') + 'cdn.fraudlabspro.com/s.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+        }              
+        (window.attachEvent) ? window.attachEvent('onload', s) : window.addEventListener('load', s, false);
+    })();
+</script>
+</body>]]></add>
+        </operation>
+    </file>
+</modification>
